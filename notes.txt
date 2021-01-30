@@ -1,1 +1,7 @@
-Chapter 2.7.  - Project Structure and Organization
+Chapter 2.9. Serving Static Files
+
+Criar várias pastas powershell
+
+'cmd/web', 'pkg', 'ui/html', 'ui/static' | % {mkdir "$_"}
+ou 
+mkdir cmd/web, pkg, ui/html, ui/static
