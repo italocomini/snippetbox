@@ -5,3 +5,5 @@ Criar várias pastas powershell
 'cmd/web', 'pkg', 'ui/html', 'ui/static' | % {mkdir "$_"}
 ou 
 mkdir cmd/web, pkg, ui/html, ui/static
+
+https://www.alexedwards.net/blog/disable-http-fileserver-directory-listings
