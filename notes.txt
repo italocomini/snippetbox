@@ -18,3 +18,14 @@ $ go run ./cmd/web -addr=$SNIPPETBOX_ADDR
 
 Using the double arrow >> will append to an existing file, instead of truncating it when starting the application
 $ go run ./cmd/web >>/tmp/info.log 2>>/tmp/error.log
+
+
+Installing a database driver
+$ go get github.com/go-sql-driver/mysql@v1
+
+
+Upgrade to a specific version
+$ go get -u github.com/foo/bar@v2.0.0
+
+Removing unused packages
+$ go mod tidy -v
