@@ -14,3 +14,7 @@ $ go run ./cmd/web -help
 
 $ export SNIPPETBOX_ADDR=":9999"
 $ go run ./cmd/web -addr=$SNIPPETBOX_ADDR
+
+
+Using the double arrow >> will append to an existing file, instead of truncating it when starting the application
+$ go run ./cmd/web >>/tmp/info.log 2>>/tmp/error.log
