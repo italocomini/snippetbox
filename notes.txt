@@ -7,3 +7,10 @@ ou
 mkdir cmd/web, pkg, ui/html, ui/static
 
 https://www.alexedwards.net/blog/disable-http-fileserver-directory-listings
+
+$ go run github.com/italocomini/snippetbox/cmd/web -addr=":4000"
+
+$ go run ./cmd/web -help
+
+$ export SNIPPETBOX_ADDR=":9999"
+$ go run ./cmd/web -addr=$SNIPPETBOX_ADDR
