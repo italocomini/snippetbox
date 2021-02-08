@@ -3,6 +3,7 @@ package main
 import (
 	"path/filepath"
 	"text/template"
+	"time"
 
 	"github.com/italocomini/snippetbox/pkg/models"
 )
@@ -28,11 +29,16 @@ func newTemplateCache(dir string) (map[string]*template.Template, error) {
 		// Extract the file name (like 'home.page.tmpl') from the full file path
 		// and assign it to the name variable.
 		name := filepath.Base(page)
-		// Parse the page template file in to a template set.
-		ts, err := template.ParseFiles(page)
+
+		// The template.FuncMap must be registered with the template set before you
+		// call the ParseFiles() method. This means we have to use template.New() to
+		// create an empty template set, use the Funcs() method to register the
+		// template.FuncMap, and then parse the file as normal.
+		ts, err := template.New(name).Funcs(functions).ParseFiles(page)
 		if err != nil {
 			return nil, err
 		}
+
 		// Use the ParseGlob method to add any 'layout' templates to the
 		// template set (in our case, it's just the 'base' layout at the
 		// moment).
@@ -53,4 +59,12 @@ func newTemplateCache(dir string) (map[string]*template.Template, error) {
 	}
 	// Return the map.
 	return cache, nil
+}
+
+func humanDate(t time.Time) string {
+	return t.Format("02 Jan 2006 at 15:04")
+}
+
+var functions = template.FuncMap{
+	"humanDate": humanDate,
 }
