@@ -22,7 +22,7 @@ func (app *application) routes() http.Handler {
 	// "/static" prefix before the request reaches the file server.
 	mux.Handle("/static/", http.StripPrefix("/static", neuter(fileServer)))
 
-	return secureHeader(mux)
+	return app.logRequest(secureHeader(mux))
 
 }
 
