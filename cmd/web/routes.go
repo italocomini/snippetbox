@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func (app *application) routes() *http.ServeMux {
+func (app *application) routes() http.Handler {
 	// http server and its handles
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", app.home)
@@ -22,7 +22,7 @@ func (app *application) routes() *http.ServeMux {
 	// "/static" prefix before the request reaches the file server.
 	mux.Handle("/static/", http.StripPrefix("/static", neuter(fileServer)))
 
-	return mux
+	return secureHeader(mux)
 
 }
 
