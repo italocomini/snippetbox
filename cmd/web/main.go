@@ -94,6 +94,7 @@ func main() {
 	// sessions always expires after 12 hours.
 	session := sessions.New([]byte(*secret))
 	session.Lifetime = 12 * time.Hour
+	session.Secure = true
 
 	// Initialize a new instance of application containing the dependencies.
 	app := &application{
@@ -123,7 +124,7 @@ func main() {
 	// Ports 0-1023 are restricted and (typically) can only be used by services which
 	// have root privileges. If you try to use one of these ports you should get a
 	// bind: permission denied error message on start-up
-	err := srv.ListenAndServe()
+	err := srv.ListenAndServeTLS("./tls/cert.pem", "./tls/key.pem")
 	errorLog.Fatal(err)
 
 }
