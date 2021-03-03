@@ -29,12 +29,7 @@ func (app *application) home(w http.ResponseWriter, r *http.Request) {
 
 // exibe um snippet
 func (app *application) showSnippet(w http.ResponseWriter, r *http.Request) {
-
-	// Pat doesn't strip the colon from the named capture key, so we need to
-	// get the value of ":id" from the query string instead of "id".
 	id, err := strconv.Atoi(r.URL.Query().Get(":id"))
-	// id, err := strconv.Atoi(r.URL.Query().Get("id"))
-
 	if err != nil || id < 1 {
 		app.notFound(w)
 		return
@@ -48,8 +43,6 @@ func (app *application) showSnippet(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
-
-	// Use the new render helper.
 	app.render(w, r, "show.page.tmpl", &templateData{
 		Snippet: s,
 	})
