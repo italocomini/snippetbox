@@ -14,6 +14,11 @@ func (app *application) routes() http.Handler {
 	// which will be used for every request our application receives.
 	standardMiddleware := alice.New(app.recoverPanic, app.logRequest, secureHeader)
 
+	// Create a new middleware chain containing the middleware specific to
+	// our dynamic application routes. For now, this chain will only contain
+	// the session middleware but we'll add more to it later.
+	dynamicMiddleware := alice.New(app.session.Enable)
+
 	// http server and its handles
 	// mux := http.NewServeMux()
 	// mux.HandleFunc("/", app.home)
@@ -22,9 +27,9 @@ func (app *application) routes() http.Handler {
 
 	mux := pat.New()
 	mux.Get("/", http.HandlerFunc(app.home))
-	mux.Get("/snippet/create", http.HandlerFunc(app.createSnippetForm))
-	mux.Post("/snippet/create", http.HandlerFunc(app.createSnippet))
-	mux.Get("/snippet/:id", http.HandlerFunc(app.showSnippet)) // Moved down
+	mux.Get("/snippet/create", dynamicMiddleware.ThenFunc(app.createSnippetForm))
+	mux.Post("/snippet/create", dynamicMiddleware.ThenFunc(app.createSnippet))
+	mux.Get("/snippet/:id", dynamicMiddleware.ThenFunc(app.showSnippet))
 
 	// Create a file server which serves files out of the "./ui/static" directory.
 	// Note that the path given to the http.Dir function is relative to the project
