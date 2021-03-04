@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"runtime/debug"
 	"time"
+
+	"github.com/justinas/nosurf"
 )
 
 // Create an addDefaultData helper. This takes a pointer to a templateData
@@ -16,13 +18,10 @@ func (app *application) addDefaultData(td *templateData, r *http.Request) *templ
 	if td == nil {
 		td = &templateData{}
 	}
+	td.CSRFToken = nosurf.Token(r)
 	td.CurrentYear = time.Now().Year()
-
-	// todo: there is an error here.
 	// td.Flash = app.session.PopString(r, "flash")
-
 	// td.IsAuthenticated = app.isAuthenticated(r)
-
 	return td
 }
 
