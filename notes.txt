@@ -31,3 +31,12 @@ $ go mod tidy -v
 go test -v ./cmd/web
 go test -failfast -v ./cmd/web
 go test ./...
+
+
+Running Specific Tests:
+go test -v -run="^TestPing$" ./cmd/web/
+go test -v -run="^TestHumanDate$/^UTC|CET$" ./cmd/web
+
+Parallel Testing: go test -parallel 4 ./...
+
+Enabling the Race Detector: go test -race ./cmd/web/

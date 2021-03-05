@@ -6,6 +6,9 @@ import (
 )
 
 func TestHumanDate(t *testing.T) {
+
+	t.Parallel()
+
 	// Create a slice of anonymous structs containing the test case name,
 	// input to our humanDate() function (the tm field), and expected output
 	// (the want field).
